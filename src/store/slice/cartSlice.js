@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialCartState = {
     products: [],
     showCart: false,
-    totalCart: 0
+    totalCart: 0,
+    notify: null
 }
 
 const cartSlice = createSlice({
@@ -77,6 +78,13 @@ const cartSlice = createSlice({
             }
 
 
+        },
+        showNotify(state, action) {
+            state.notify = {
+                status: action.payload.status,
+                title: action.payload.title,
+                message: action.payload.message
+            }
         }
     }
 })
