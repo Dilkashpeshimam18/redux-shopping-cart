@@ -34,6 +34,49 @@ const cartSlice = createSlice({
                 state.products.push(action.payload)
 
             }
+        },
+        increment(state, action) {
+            let existingProductIndex = state.products.findIndex(ele => ele.id == action.payload)
+            let existingProduct = state.products[existingProductIndex]
+            let updatedItem;
+            let updatedItems
+            if (existingProduct) {
+
+                updatedItem = {
+                    ...existingProduct,
+                    quantity: existingProduct.quantity + 1,
+                    total: existingProduct.total + existingProduct.price
+                }
+            }
+            updatedItems = [...state.products]
+            updatedItems[existingProductIndex] = updatedItem
+            state.products = updatedItems
+        },
+        decrement(state, action) {
+            let existingProductIndex = state.products.findIndex(ele => ele.id == action.payload)
+            let existingProduct = state.products[existingProductIndex]
+            let updatedItem;
+            let updatedItems
+            if (existingProduct.quantity >= 2) {
+
+                updatedItem = {
+                    ...existingProduct,
+
+                    quantity: existingProduct.quantity - 1,
+                    total: existingProduct.total - existingProduct.price
+                }
+                updatedItems = [...state.products]
+                updatedItems[existingProductIndex] = updatedItem
+                state.products = updatedItems
+
+            } else {
+                let filterProduct = state.products.filter((item) => {
+                    return item.id != action.payload
+                })
+                state.products = filterProduct
+            }
+
+
         }
     }
 })
